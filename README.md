@@ -6,6 +6,9 @@ JavaScript Machine Learning ES6 Module
 https://cdn.jsdelivr.net/gh/luisespino/mlearnjs@main/mlearn.mjs
 
 ### Example
+
+It is using dynamic import with import(), async, and await for efficiency, to load only the necessary code depending on the machine learning model to be used.
+
 ```
 async function fit_predict() {
     // Dynamically import the DecisionTreeClassifier module
