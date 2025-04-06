@@ -1,4 +1,3 @@
-
 export const LinearRegression = async () => {
     const { LinearRegression } = await import('/linear-model.mjs');
     return LinearRegression;
