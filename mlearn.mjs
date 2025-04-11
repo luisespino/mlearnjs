@@ -18,6 +18,11 @@ export const DecisionTreeClassifier = async () => {
     return DecisionTreeClassifier;
 };
 
+export const MLPClassifier = async () => {
+    const { MLPClassifier } = await import('./neural-network.mjs');
+    return MLPClassifier;
+};
+
 export const LabelEncoder = async () => {
     const { LabelEncoder } = await import('./preprocessing.mjs');
     return LabelEncoder;
