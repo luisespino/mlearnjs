@@ -71,19 +71,19 @@ export class MLPClassifier {
     predict(input_array) {
         let inputs = input_array.map(v => [v]);
 
-        let hidden = MLP.dot(this.weights_ih, inputs);
-        hidden = MLP.add(hidden, this.bias_h);
-        hidden = MLP.map(hidden, sigmoid);
+        let hidden = this.dot(this.weights_ih, inputs);
+        hidden = this.add(hidden, this.bias_h);
+        hidden = this.map(hidden, sigmoid);
 
-        let outputs = MLP.dot(this.weights_ho, hidden);
-        outputs = MLP.add(outputs, this.bias_o);
-        outputs = MLP.map(outputs, sigmoid);
+        let outputs = this.dot(this.weights_ho, hidden);
+        outputs = this.add(outputs, this.bias_o);
+        outputs = this.map(outputs, sigmoid);
 
         return outputs.map(row => row[0]);
     }
 
     // ---- TRAIN ----
-    train(X, Y, epochs = 10000) {
+    fit(X, Y, epochs = 10000) {
         for (let e = 0; e < epochs; e++) {
         for (let i = 0; i < X.length; i++) {
             this.trainSingle(X[i], Array.isArray(Y[i]) ? Y[i] : [Y[i]]);
@@ -91,42 +91,42 @@ export class MLPClassifier {
         }
     }
 
-    trainSingle(input_array, target_array) {
+    fitSingle(input_array, target_array) {
         let inputs = input_array.map(v => [v]);
         let targets = target_array.map(v => [v]);
 
         // FORWARD
-        let hidden = MLP.dot(this.weights_ih, inputs);
-        hidden = MLP.add(hidden, this.bias_h);
-        hidden = MLP.map(hidden, sigmoid);
+        let hidden = this.dot(this.weights_ih, inputs);
+        hidden = this.add(hidden, this.bias_h);
+        hidden = this.map(hidden, sigmoid);
 
-        let outputs = MLP.dot(this.weights_ho, hidden);
-        outputs = MLP.add(outputs, this.bias_o);
-        outputs = MLP.map(outputs, sigmoid);
+        let outputs = this.dot(this.weights_ho, hidden);
+        outputs = this.add(outputs, this.bias_o);
+        outputs = this.map(outputs, sigmoid);
 
         // BACKPROP
-        let output_errors = MLP.subtract(targets, outputs);
-        let gradients = MLP.map(outputs, sigmoidDerivative);
-        gradients = MLP.multiply(gradients, output_errors);
-        gradients = MLP.scalarMultiply(gradients, this.lr);
+        let output_errors = this.subtract(targets, outputs);
+        let gradients = this.map(outputs, sigmoidDerivative);
+        gradients = this.multiply(gradients, output_errors);
+        gradients = this.scalarMultiply(gradients, this.lr);
 
-        let hidden_T = MLP.transpose(hidden);
-        let weights_ho_deltas = MLP.dot(gradients, hidden_T);
+        let hidden_T = this.transpose(hidden);
+        let weights_ho_deltas = this.dot(gradients, hidden_T);
 
-        this.weights_ho = MLP.add(this.weights_ho, weights_ho_deltas);
-        this.bias_o = MLP.add(this.bias_o, gradients);
+        this.weights_ho = this.add(this.weights_ho, weights_ho_deltas);
+        this.bias_o = this.add(this.bias_o, gradients);
 
-        let who_T = MLP.transpose(this.weights_ho);
-        let hidden_errors = MLP.dot(who_T, output_errors);
+        let who_T = this.transpose(this.weights_ho);
+        let hidden_errors = this.dot(who_T, output_errors);
 
-        let hidden_gradient = MLP.map(hidden, sigmoidDerivative);
-        hidden_gradient = MLP.multiply(hidden_gradient, hidden_errors);
-        hidden_gradient = MLP.scalarMultiply(hidden_gradient, this.lr);
+        let hidden_gradient = this.map(hidden, sigmoidDerivative);
+        hidden_gradient = this.multiply(hidden_gradient, hidden_errors);
+        hidden_gradient = this.scalarMultiply(hidden_gradient, this.lr);
 
-        let inputs_T = MLP.transpose(inputs);
-        let weights_ih_deltas = MLP.dot(hidden_gradient, inputs_T);
+        let inputs_T = this.transpose(inputs);
+        let weights_ih_deltas = this.dot(hidden_gradient, inputs_T);
 
-        this.weights_ih = MLP.add(this.weights_ih, weights_ih_deltas);
-        this.bias_h = MLP.add(this.bias_h, hidden_gradient);
+        this.weights_ih = this.add(this.weights_ih, weights_ih_deltas);
+        this.bias_h = this.add(this.bias_h, hidden_gradient);
     }
 }
