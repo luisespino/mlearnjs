@@ -22,10 +22,10 @@ export class MLPClassifier {
     randomMatrix(rows, cols) {
         let arr = new Array(rows);
         for (let i = 0; i < rows; i++) {
-        arr[i] = new Array(cols);
-        for (let j = 0; j < cols; j++) {
-            arr[i][j] = Math.random() * 2 - 1;
-        }
+            arr[i] = new Array(cols);
+            for (let j = 0; j < cols; j++) {
+                arr[i][j] = Math.random() * 2 - 1;
+            }
         }
         return arr;
     }
@@ -33,12 +33,12 @@ export class MLPClassifier {
     static dot(a, b) {
         let result = new Array(a.length);
         for (let i = 0; i < a.length; i++) {
-        result[i] = new Array(b[0].length).fill(0);
-        for (let j = 0; j < b[0].length; j++) {
-            for (let k = 0; k < a[0].length; k++) {
-            result[i][j] += a[i][k] * b[k][j];
+            result[i] = new Array(b[0].length).fill(0);
+            for (let j = 0; j < b[0].length; j++) {
+                for (let k = 0; k < a[0].length; k++) {
+                    result[i][j] += a[i][k] * b[k][j];
+                }
             }
-        }
         }
         return result;
     }
@@ -71,13 +71,13 @@ export class MLPClassifier {
     predict(input_array) {
         let inputs = input_array.map(v => [v]);
 
-        let hidden = this.dot(this.weights_ih, inputs);
-        hidden = this.add(hidden, this.bias_h);
-        hidden = this.map(hidden, sigmoid);
+        let hidden = MLPClassifier.dot(this.weights_ih, inputs);
+        hidden = MLPClassifier.add(hidden, this.bias_h);
+        hidden = MLPClassifier.map(hidden, sigmoid);
 
-        let outputs = this.dot(this.weights_ho, hidden);
-        outputs = this.add(outputs, this.bias_o);
-        outputs = this.map(outputs, sigmoid);
+        let outputs = MLPClassifier.dot(this.weights_ho, hidden);
+        outputs = MLPClassifier.add(outputs, this.bias_o);
+        outputs = MLPClassifier.map(outputs, sigmoid);
 
         return outputs.map(row => row[0]);
     }
@@ -85,9 +85,9 @@ export class MLPClassifier {
     // ---- TRAIN ----
     fit(X, Y, epochs = 10000) {
         for (let e = 0; e < epochs; e++) {
-        for (let i = 0; i < X.length; i++) {
-            this.fitSingle(X[i], Array.isArray(Y[i]) ? Y[i] : [Y[i]]);
-        }
+            for (let i = 0; i < X.length; i++) {
+                this.fitSingle(X[i], Array.isArray(Y[i]) ? Y[i] : [Y[i]]);
+            }
         }
     }
 
@@ -96,37 +96,37 @@ export class MLPClassifier {
         let targets = target_array.map(v => [v]);
 
         // FORWARD
-        let hidden = this.dot(this.weights_ih, inputs);
-        hidden = this.add(hidden, this.bias_h);
-        hidden = this.map(hidden, sigmoid);
+        let hidden = MLPClassifier.dot(this.weights_ih, inputs);
+        hidden = MLPClassifier.add(hidden, this.bias_h);
+        hidden = MLPClassifier.map(hidden, sigmoid);
 
-        let outputs = this.dot(this.weights_ho, hidden);
-        outputs = this.add(outputs, this.bias_o);
-        outputs = this.map(outputs, sigmoid);
+        let outputs = MLPClassifier.dot(this.weights_ho, hidden);
+        outputs = MLPClassifier.add(outputs, this.bias_o);
+        outputs = MLPClassifier.map(outputs, sigmoid);
 
         // BACKPROP
-        let output_errors = this.subtract(targets, outputs);
-        let gradients = this.map(outputs, sigmoidDerivative);
-        gradients = this.multiply(gradients, output_errors);
-        gradients = this.scalarMultiply(gradients, this.lr);
+        let output_errors = MLPClassifier.subtract(targets, outputs);
+        let gradients = MLPClassifier.map(outputs, sigmoidDerivative);
+        gradients = MLPClassifier.multiply(gradients, output_errors);
+        gradients = MLPClassifier.scalarMultiply(gradients, this.lr);
 
-        let hidden_T = this.transpose(hidden);
-        let weights_ho_deltas = this.dot(gradients, hidden_T);
+        let hidden_T = MLPClassifier.transpose(hidden);
+        let weights_ho_deltas = MLPClassifier.dot(gradients, hidden_T);
 
-        this.weights_ho = this.add(this.weights_ho, weights_ho_deltas);
-        this.bias_o = this.add(this.bias_o, gradients);
+        this.weights_ho = MLPClassifier.add(this.weights_ho, weights_ho_deltas);
+        this.bias_o = MLPClassifier.add(this.bias_o, gradients);
 
-        let who_T = this.transpose(this.weights_ho);
-        let hidden_errors = this.dot(who_T, output_errors);
+        let who_T = MLPClassifier.transpose(this.weights_ho);
+        let hidden_errors = MLPClassifier.dot(who_T, output_errors);
 
-        let hidden_gradient = this.map(hidden, sigmoidDerivative);
-        hidden_gradient = this.multiply(hidden_gradient, hidden_errors);
-        hidden_gradient = this.scalarMultiply(hidden_gradient, this.lr);
+        let hidden_gradient = MLPClassifier.map(hidden, sigmoidDerivative);
+        hidden_gradient = MLPClassifier.multiply(hidden_gradient, hidden_errors);
+        hidden_gradient = MLPClassifier.scalarMultiply(hidden_gradient, this.lr);
 
-        let inputs_T = this.transpose(inputs);
-        let weights_ih_deltas = this.dot(hidden_gradient, inputs_T);
+        let inputs_T = MLPClassifier.transpose(inputs);
+        let weights_ih_deltas = MLPClassifier.dot(hidden_gradient, inputs_T);
 
-        this.weights_ih = this.add(this.weights_ih, weights_ih_deltas);
-        this.bias_h = this.add(this.bias_h, hidden_gradient);
+        this.weights_ih = MLPClassifier.add(this.weights_ih, weights_ih_deltas);
+        this.bias_h = MLPClassifier.add(this.bias_h, hidden_gradient);
     }
 }
