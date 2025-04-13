@@ -86,7 +86,7 @@ export class MLPClassifier {
     fit(X, Y, epochs = 10000) {
         for (let e = 0; e < epochs; e++) {
         for (let i = 0; i < X.length; i++) {
-            this.trainSingle(X[i], Array.isArray(Y[i]) ? Y[i] : [Y[i]]);
+            this.fitSingle(X[i], Array.isArray(Y[i]) ? Y[i] : [Y[i]]);
         }
         }
     }
