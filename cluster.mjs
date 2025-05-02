@@ -24,7 +24,7 @@ export class KMeans {
         const centroids = [];
         const usedIndices = new Set();
         while (centroids.length < this.n_clusters) {
-            const idx = Math.floor(this._random * X.length);
+            const idx = Math.floor(this._random() * X.length);
             if (!usedIndices.has(idx)) {
                 centroids.push([...X[idx]]);
                 usedIndices.add(idx);
