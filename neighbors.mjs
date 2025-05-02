@@ -1,4 +1,4 @@
-export class NearestNeighbors {
+export class KNearestNeighbors {
     constructor(n_neighbors = 3) {
         this.n_neighbors = n_neighbors;
         this.X_train = [];

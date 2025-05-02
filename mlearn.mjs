@@ -28,9 +28,9 @@ export const KMeans = async () => {
     return KMeans;
 };
 
-export const NearestNeighbors = async () => {
-    const { NearestNeighbors } = await import('./neighbors.mjs');
-    return NearestNeighbors;
+export const KNearestNeighbors = async () => {
+    const { KNearestNeighbors } = await import('./neighbors.mjs');
+    return KNearestNeighbors;
 };
 
 export const LabelEncoder = async () => {
