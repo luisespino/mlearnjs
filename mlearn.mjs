@@ -23,6 +23,11 @@ export const MLPClassifier = async () => {
     return MLPClassifier;
 };
 
+export const KMeans = async () => {
+    const { KMeans } = await import('./cluster.mjs');
+    return KMeans;
+};
+
 export const LabelEncoder = async () => {
     const { LabelEncoder } = await import('./preprocessing.mjs');
     return LabelEncoder;
