@@ -1,7 +1,7 @@
 // cluster.mjs
 
 export class KMeans {
-    constructor(n_clusters = 3, max_iter = 300, tolerance = 1e-4, random_state = null) {
+    constructor(n_clusters = 3, max_iter = 300, tolerance = 1e-4, random_state = 42) {
         this.n_clusters = n_clusters;
         this.max_iter = max_iter;
         this.tolerance = tolerance;
@@ -9,11 +9,6 @@ export class KMeans {
         this.centroids = [];
         this.labels = [];
         this.isFit = false;
-
-        if (random_state !== null) {
-            // Fijamos la semilla para tener resultados reproducibles
-            Math.seedrandom(random_state);
-        }
     }
 
     euclideanDistance(point1, point2) {
@@ -24,7 +19,7 @@ export class KMeans {
         const centroids = [];
         const usedIndices = new Set();
         while (centroids.length < this.n_clusters) {
-            const idx = Math.floor(Math.random() * X.length);
+            const idx = Math.floor(this.seededRandom(this.random_state) * X.length);
             if (!usedIndices.has(idx)) {
                 centroids.push([...X[idx]]);
                 usedIndices.add(idx);
@@ -120,5 +115,16 @@ export class KMeans {
     // Método opcional para obtener etiquetas después del fit
     getLabels() {
         return this.labels;
+    }
+
+    seededRandom(seed) {
+        let m = 2 ** 31 - 1;
+        let a = 1103515245;
+        let c = 12345;
+        let state = seed % m;
+        return function () {
+            state = (a * state + c) % m;
+            return state / m;
+        };
     }
 }
