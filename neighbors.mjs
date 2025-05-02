@@ -48,10 +48,20 @@ export class KNearestNeighbors {
     }
 
     _mode(array) {
-        const counts = {};
+        const counts = new Map();
         for (const val of array) {
-            counts[val] = (counts[val] || 0) + 1;
+            counts.set(val, (counts.get(val) || 0) + 1);
         }
-        return Object.entries(counts).reduce((a, b) => (a[1] >= b[1] ? a : b))[0];
+    
+        let maxVal = null;
+        let maxCount = -1;
+        for (const [val, count] of counts.entries()) {
+            if (count > maxCount) {
+                maxCount = count;
+                maxVal = val;
+            }
+        }
+    
+        return maxVal;
     }
 }
