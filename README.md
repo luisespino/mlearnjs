@@ -51,8 +51,9 @@ JSDelivr changes may be slow. To use the latest version of the model, use:
 | 3     | `GaussianNB`               | `/naive-bayes.mjs`         | Class implementing the Naive Bayes classifier for Gaussian data. |
 | 4     | `DecisionTreeClassifier`   | `/tree.mjs`                | Class for building and using decision trees.                     |
 | 5     | `MLPClassifier`   | `/neural-network.mjs`                | Class implementing the MLP classifier.                     |
-| 6     | `LabelEncoder`             | `/preprocessing.mjs`       | Class for encoding labels into numeric form.                     |
-| 7     | `trainTestSplit`           | `/model-selection.mjs`     | Function for splitting datasets into training and testing sets.  |
-| 8     | `joinArrays`               | `/model-selection.mjs`     | Function for joining two or more arrays.                         |
-| 9     | `zip`                      | `/model-selection.mjs`     | Function for zipping two or more arrays element-wise.            |
-| 10    | `accuracyScore`            | `/metrics.mjs`             | Function to calculate the accuracy score of a model.             |
+| 6     | `KMeans`          | `/cluster.mjs`       | Class for implementing the KMeans Cluster Classifier.
+| 7     | `LabelEncoder`             | `/preprocessing.mjs`       | Class for encoding labels into numeric form.                     |
+| 8     | `trainTestSplit`           | `/model-selection.mjs`     | Function for splitting datasets into training and testing sets.  |
+| 9     | `joinArrays`               | `/model-selection.mjs`     | Function for joining two or more arrays.                         |
+| 10     | `zip`                      | `/model-selection.mjs`     | Function for zipping two or more arrays element-wise.            |
+| 11    | `accuracyScore`            | `/metrics.mjs`             | Function to calculate the accuracy score of a model.             |
