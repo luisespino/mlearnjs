@@ -1,14 +1,19 @@
 // cluster.mjs
 
 export class KMeans {
-    constructor(n_clusters = 3, max_iter = 300, tolerance = 1e-4, random_state = 42) {
+    constructor(n_clusters = 3, max_iter = 300, tolerance = 1e-4, random_state = null) {
         this.n_clusters = n_clusters;
         this.max_iter = max_iter;
         this.tolerance = tolerance;
-        this.random_state = random_state;
         this.centroids = [];
         this.labels = [];
         this.isFit = false;
+
+        if (random_state !== null) {
+            this._random = this.seededRandom(random_state);
+        } else {
+            this._random = Math.random;
+        }
     }
 
     euclideanDistance(point1, point2) {
@@ -19,7 +24,7 @@ export class KMeans {
         const centroids = [];
         const usedIndices = new Set();
         while (centroids.length < this.n_clusters) {
-            const idx = Math.floor(this.seededRandom(this.random_state) * X.length);
+            const idx = Math.floor(this._random * X.length);
             if (!usedIndices.has(idx)) {
                 centroids.push([...X[idx]]);
                 usedIndices.add(idx);
