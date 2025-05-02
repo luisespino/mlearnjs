@@ -28,6 +28,11 @@ export const KMeans = async () => {
     return KMeans;
 };
 
+export const NearestNeighbors = async () => {
+    const { NearestNeighbors } = await import('./neighbors.mjs');
+    return NearestNeighbors;
+};
+
 export const LabelEncoder = async () => {
     const { LabelEncoder } = await import('./preprocessing.mjs');
     return LabelEncoder;
