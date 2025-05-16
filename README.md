@@ -56,3 +56,21 @@ JSDelivr changes may be slow. To use the latest version of the model, use:
 | 8     | `joinArrays`               | `/model-selection.mjs`     | Function for joining two or more arrays.                         |
 | 9     | `zip`                      | `/model-selection.mjs`     | Function for zipping two or more arrays element-wise.            |
 | 10    | `accuracyScore`            | `/metrics.mjs`             | Function to calculate the accuracy score of a model.             |
+
+## Examples
+
+[Linear Regression](https://luisespino.github.io/artificial-intelligence/javascript/08-linear-regression.html)
+
+[Polynomial Regression](https://luisespino.github.io/artificial-intelligence/javascript/09-polynomial-regression.html)
+
+[Gaussian Naive Bayes](https://luisespino.github.io/artificial-intelligence/javascript/10-gaussian-nb.html)
+
+[Decision Tree](https://luisespino.github.io/artificial-intelligence/javascript/11-decision-tree.html)
+
+[MLP Classifier Logic Gates ](https://luisespino.github.io/artificial-intelligence/javascript/12-mlp-classifier.html)
+
+[MLP Classifier](https://luisespino.github.io/artificial-intelligence/javascript/13-mlp-classifier.html)
+
+[KMeans Cluster Classifier](https://luisespino.github.io/artificial-intelligence/javascript/14-kmeans-classifier.html)
+
+[KNearest Neighbors Classifier](https://luisespino.github.io/artificial-intelligence/javascript/15-neighbors-classifier.html)
