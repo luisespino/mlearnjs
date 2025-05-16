@@ -5,14 +5,14 @@ export class KMeans {
         this.n_clusters = n_clusters;
         this.max_iter = max_iter;
         this.tolerance = tolerance;
-        this.random_state = random_state;
         this.centroids = [];
         this.labels = [];
         this.isFit = false;
 
         if (random_state !== null) {
-            // Fijamos la semilla para tener resultados reproducibles
-            Math.seedrandom(random_state);
+            this._random = this.seededRandom(random_state);
+        } else {
+            this._random = Math.random;
         }
     }
 
@@ -24,7 +24,7 @@ export class KMeans {
         const centroids = [];
         const usedIndices = new Set();
         while (centroids.length < this.n_clusters) {
-            const idx = Math.floor(Math.random() * X.length);
+            const idx = Math.floor(this._random() * X.length);
             if (!usedIndices.has(idx)) {
                 centroids.push([...X[idx]]);
                 usedIndices.add(idx);
@@ -120,5 +120,16 @@ export class KMeans {
     // Método opcional para obtener etiquetas después del fit
     getLabels() {
         return this.labels;
+    }
+
+    seededRandom(seed) {
+        let m = 2 ** 31 - 1;
+        let a = 1103515245;
+        let c = 12345;
+        let state = seed % m;
+        return function () {
+            state = (a * state + c) % m;
+            return state / m;
+        };
     }
 }
